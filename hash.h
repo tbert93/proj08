@@ -7,6 +7,7 @@
 
 #include <vector>
 #include <string>
+#include <list>
 
 
 using namespace std;
@@ -14,15 +15,11 @@ using namespace std;
 
 class Hash {
 private:
-    static const int tableSize = 1000007;   //very large prime number
+   
+   static const int tableSize = 1000037;   //very large prime number
 
-    struct hashNode{
+   vector<int> *table;
 
-        int data;
-        hashNode *next;
-    };
-
-    hashNode* table[tableSize];
 
 
 
@@ -31,6 +28,9 @@ public:
     Hash();
 
     void hashFunction(const string &s, int key);
+    void displayHash();
+    void displayCollisions(int cheaterNum, int numFiles, vector<string> &files);
+    void scrubber(string &str);
     ~Hash();
 
 

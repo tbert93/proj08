@@ -5,6 +5,7 @@
 #include <string>
 #include <iostream>
 #include <fstream>
+#include <stdlib.h>
 #include "hash.h"
 
 using namespace std;
@@ -28,21 +29,22 @@ int getdir (string dir, vector<string> &files)
 
 int main(int argc, char* argv[])
 {
-    string dir = string("C:\\Users\\tonyb\\CLionProjects\\proj08\\sm_doc_set");
-    //int numWords = atoi(argv[2]);
-    //int numDocs = atoi(argv[3]);
+    string dir = argv[1];
+    int numSeq = atoi(argv[2]);
+    int cheaterNum = atoi(argv[3]);
     vector<string> files = vector<string>();
 
     getdir(dir,files);
 
 
-    for (unsigned int i = 0;i < files.size();i++) {
+    /*for (unsigned int i = 0;i < files.size();i++) { //output of file names
         cout << i << files[i] << endl;
     }
-
+*/
     Hash h;
+    int numFiles = files.size() - 2;
 
-    /*ifstream myFile;
+    ifstream myFile;
     for(int i = 2; i < files.size(); i++){
 
         string fileptr = dir + '/' + files[i];
@@ -52,9 +54,10 @@ int main(int argc, char* argv[])
         vector<string> words;
 
         while(!myFile.eof()){
-            while(words.size() < 6 && !myFile.eof() ){
+            while(words.size() < numSeq && !myFile.eof() ){
 
                 myFile >> word;
+		h.scrubber(word);
 
                 if(word.length() != 0){
                     words.push_back(word);
@@ -62,9 +65,10 @@ int main(int argc, char* argv[])
             }
             string chunk;
 
-            for(int j = 0; j < word.length(); j++){
-                chunk += word.at(j);
+            for(int j = 0; j < words.size(); j++){
+                chunk += words.at(j);
             }
+            //cout<<chunk<<endl;
             h.hashFunction(chunk, i-2);
             words.erase(words.begin());
         }
@@ -73,6 +77,10 @@ int main(int argc, char* argv[])
 
     }
 
+    //h.displayHash();
 
-   */return 0;
+    h.displayCollisions(cheaterNum,numFiles, files);
+
+
+   return 0;
 }
